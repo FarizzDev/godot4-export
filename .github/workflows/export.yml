@@ -70,6 +70,9 @@ jobs:
           keytool -genkey -v -keystore debug.keystore -alias debuser -keyalg RSA -keysize 2048 -validity 10000 -storepass debpass -keypass debpass -dname "CN=Android Export,O=Android,C=US"
           keytool -genkey -v -keystore release.keystore -alias reluser -keyalg RSA -keysize 2048 -validity 10000 -storepass relpass -dname "CN=Android Export,O=Android,C=US"
 
+      - name: ⚙️ Start ADB Server
+        run: adb start-server
+
       - name: Export for Android
         run: ./godot --headless --path $PROJECT_PATH --export-release "Android" build/windows/mygame.apk
         continue-on-error: true
