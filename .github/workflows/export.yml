@@ -43,18 +43,39 @@ jobs:
 
       # Langkah 3: Buat direktori untuk menampung hasil build
       - name: Create Build Directory
-        run: mkdir -p build/linux build/windows build/android
+        run: mkdir -p build/linux build/windows build/android build/web
 
       # Langkah 4: Jalankan perintah ekspor
       # Ganti "Linux/X11" dan "Windows Desktop" dengan nama preset Anda
       - name: Export for Linux
-        run: ./godot --headless --path $PROJECT_PATH --export-release "Linux/X11" build/linux/mygame
+        run: ./godot --headless --path $PROJECT_PATH --export-release "Linux" build/linux/mygame
+        continue-on-error: true
 
       - name: Export for Windows
         run: ./godot --headless --path $PROJECT_PATH --export-release "Windows Desktop" build/windows/mygame.exe
+        continue-on-error: true
+
+      - name: 📱 Set up JDK (Only for Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: 📱 Set up Android SDK (Only for Android)
+        uses: android-actions/setup-android@v3
+
+      - name: 🔑 Generate Keystore (Only for Android)
+        run: |
+          keytool -genkey -v -keystore debug.keystore -alias debuser -keyalg RSA -keysize 2048 -validity 10000 -storepass debpass -keypass debpass -dname "CN=Android Export,O=Android,C=US"
+          keytool -genkey -v -keystore release.keystore -alias reluser -keyalg RSA -keysize 2048 -validity 10000 -storepass relpass -dname "CN=Android Export,O=Android,C=US"
 
       - name: Export for Android
         run: ./godot --headless --path $PROJECT_PATH --export-release "Android" build/windows/mygame.apk
+        continue-on-error: true
+
+      - name: Export for HTML
+        run: ./godot --headless --path $PROJECT_PATH --export-release "Web" build/web/mygame.zip
+        continue-on-error: true
 
       # Langkah 5: Unggah hasil build sebagai artifact
       - name: Upload Linux Artifact
