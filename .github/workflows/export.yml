@@ -63,49 +63,49 @@ jobs:
       - name: ⚙️ Start ADB Server
         run: adb start-server
 
-      # Langkah 4: Jalankan perintah ekspor
-      # Ganti "Linux/X11" dan "Windows Desktop" dengan nama preset Anda
-      - name: Export for Linux
-        run: ./godot --headless --path $PROJECT_PATH --export-release "Linux" build/linux/mygame
-        continue-on-error: true
-
-      - name: Export for Windows
-        run: ./godot --headless --path $PROJECT_PATH --export-release "Windows Desktop" build/windows/mygame.exe
-        continue-on-error: true
-
+      # # Langkah 4: Jalankan perintah ekspor
+      # # Ganti "Linux/X11" dan "Windows Desktop" dengan nama preset Anda
+      # - name: Export for Linux
+      #   run: ./godot --headless --path $PROJECT_PATH --export-release "Linux" build/linux/mygame
+      #   continue-on-error: true
+      #
+      # - name: Export for Windows
+      #   run: ./godot --headless --path $PROJECT_PATH --export-release "Windows Desktop" build/windows/mygame.exe
+      #   continue-on-error: true
+      #
       - name: Export for Android
         env:
           GODOT_ANDROID_KEYSTORE_RELEASE_PATH: "release.keystore"
           GODOT_ANDROID_KEYSTORE_RELEASE_USER: "reluser"
           GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: "relpass"
-        run: ./godot --headless --verbose --path $PROJECT_PATH --export-release "Android" --enable-addon gdfxr build/windows/mygame.apk
+        run: ./godot --headless --verbose --path $PROJECT_PATH --export-release "Android" build/windows/mygame.apk
         continue-on-error: true
-
-      - name: Export for HTML
-        run: ./godot --headless --path $PROJECT_PATH --export-release "Web" build/web/mygame.zip
-        continue-on-error: true
-
-      # Langkah 5: Unggah hasil build sebagai artifact
-      - name: Upload Linux Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux-build
-          path: build/linux/
-
-      - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-build
-          path: build/windows/
-
+      #
+      # - name: Export for HTML
+      #   run: ./godot --headless --path $PROJECT_PATH --export-release "Web" build/web/mygame.zip
+      #   continue-on-error: true
+      #
+      # # Langkah 5: Unggah hasil build sebagai artifact
+      # - name: Upload Linux Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: linux-build
+      #     path: build/linux/
+      #
+      # - name: Upload Windows Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: windows-build
+      #     path: build/windows/
+      #
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-build
           path: build/android/
-
-      - name: Upload Web Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: web-build
-          path: build/web
+      #
+      # - name: Upload Web Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: web-build
+      #     path: build/web
