@@ -78,7 +78,7 @@ jobs:
           GODOT_ANDROID_KEYSTORE_RELEASE_PATH: "release.keystore"
           GODOT_ANDROID_KEYSTORE_RELEASE_USER: "reluser"
           GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: "relpass"
-        run: ./godot --headless --verbose --path $PROJECT_PATH --export-release "Android" build/windows/mygame.apk
+        run: ./godot --headless --verbose --path $PROJECT_PATH --export-release "Android" --enable-addon gdfxr build/windows/mygame.apk
         continue-on-error: true
 
       - name: Export for HTML
