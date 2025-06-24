@@ -37,9 +37,9 @@ jobs:
           # Unduh export templates
           wget https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz
           # Buat direktori untuk templates
-          mkdir -p ~/.local/share/godot/export_templates/4.5.beta1
+          mkdir -p ~/.local/share/godot/export_templates/4.5.beta1/templates
           # Unzip templates ke direktori yang benar
-          unzip Godot_v${GODOT_VERSION}_export_templates.tpz -d /home/runner/.local/share/godot/export_templates/4.5.beta1
+          unzip Godot_v${GODOT_VERSION}_export_templates.tpz -d ~/.local/share/godot/export_templates/4.5.beta1/templates
 
       # Langkah 3: Buat direktori untuk menampung hasil build
       - name: Create Build Directory
