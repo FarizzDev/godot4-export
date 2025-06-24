@@ -32,7 +32,7 @@ jobs:
           unzip Godot_v${GODOT_VERSION}_linux.x86_64.zip
 
           # Pindahkan executable agar mudah dipanggil dan beri izin eksekusi
-          mv Godot_v${GODOT_VERSION}_linux.x86_64/Godot_v${GODOT_VERSION}_linux.x86_64 godot
+          mv Godot_v${GODOT_VERSION}_linux.x86_64 godot
           chmod +x godot
           # Unduh export templates
           wget https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz
