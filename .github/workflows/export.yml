@@ -1,0 +1,76 @@
+# Nama workflow yang akan tampil di tab Actions di GitHub
+name: Godot Export Game
+
+# Pemicu workflow: dijalankan setiap kali ada push ke branch 'main'
+on:
+  push:
+    branches: [main]
+
+# Daftar pekerjaan (jobs) yang akan dijalankan
+jobs:
+  # Nama job (bisa apa saja, misal: 'export-windows-linux')
+  export:
+    # Menggunakan runner Ubuntu versi terbaru
+    runs-on: ubuntu-latest
+
+    # Variabel environment untuk mempermudah, sesuaikan versi Godot Anda
+    env:
+      GODOT_VERSION: 4.5-beta1
+      PROJECT_PATH: "." # Path ke project.godot dari root repo
+
+    steps:
+      # Langkah 1: Checkout kode proyek dari repositori
+      - name: Checkout Project Code
+        uses: actions/checkout@v4
+
+      # Langkah 2: Setup Godot & Export Templates
+      # Kita akan unduh Godot dan templates secara manual
+      - name: Setup Godot
+        run: |
+          # Unduh Godot headless dan unzip
+          wget https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip
+          unzip Godot_v${GODOT_VERSION}_linux.x86_64.zip
+
+          # Pindahkan executable agar mudah dipanggil dan beri izin eksekusi
+          mv Godot_v${GODOT_VERSION}_linux.x86_64/Godot_v${GODOT_VERSION}_linux.x86_64 godot
+          chmod +x godot
+          # Unduh export templates
+          wget https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz
+          # Buat direktori untuk templates
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}
+          # Unzip templates ke direktori yang benar
+          unzip Godot_v${GODOT_VERSION}_export_templates.tpz -d ~/.local/share/godot/export_templates/${GODOT_VERSION}
+
+      # Langkah 3: Buat direktori untuk menampung hasil build
+      - name: Create Build Directory
+        run: mkdir -p build/linux build/windows build/android
+
+      # Langkah 4: Jalankan perintah ekspor
+      # Ganti "Linux/X11" dan "Windows Desktop" dengan nama preset Anda
+      - name: Export for Linux
+        run: ./godot --headless --path $PROJECT_PATH --export-release "Linux/X11" build/linux/mygame
+
+      - name: Export for Windows
+        run: ./godot --headless --path $PROJECT_PATH --export-release "Windows Desktop" build/windows/mygame.exe
+
+      - name: Export for Android
+        run: ./godot --headless --path $PROJECT_PATH --export-release "Android" build/windows/mygame.apk
+
+      # Langkah 5: Unggah hasil build sebagai artifact
+      - name: Upload Linux Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-build
+          path: build/linux/
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: build/windows/
+
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: build/android/
