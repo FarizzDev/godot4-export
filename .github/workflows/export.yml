@@ -3,8 +3,9 @@ name: Godot Export Game
 
 # Pemicu workflow: dijalankan setiap kali ada push ke branch 'main'
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
+  # push:
+  #   branches: [main]
 
 # Daftar pekerjaan (jobs) yang akan dijalankan
 jobs:
