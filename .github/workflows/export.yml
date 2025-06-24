@@ -74,7 +74,7 @@ jobs:
         run: adb start-server
 
       - name: Export for Android
-        run: ./godot --headless --path $PROJECT_PATH --export-release "Android" build/windows/mygame.apk
+        run: ./godot --headless --verbose --path $PROJECT_PATH --export-release "Android" build/windows/mygame.apk
         continue-on-error: true
 
       - name: Export for HTML
