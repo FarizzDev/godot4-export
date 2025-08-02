@@ -152,14 +152,14 @@ theme_override_fonts/font = ExtResource("8_doswy")
 theme_override_font_sizes/font_size = 32
 text = "x 3"
 
-[node name="Kiri" type="TouchScreenButton" parent="UserInterface/GameUI"]
+[node name="Left" type="TouchScreenButton" parent="UserInterface/GameUI"]
 position = Vector2(100, 544)
 rotation = -1.5707964
 texture_normal = ExtResource("8_ombkc")
 action = "Left"
 visibility_mode = 1
 
-[node name="Kanan" type="TouchScreenButton" parent="UserInterface/GameUI"]
+[node name="Right" type="TouchScreenButton" parent="UserInterface/GameUI"]
 position = Vector2(394, 413)
 rotation = 1.5707964
 texture_normal = ExtResource("8_ombkc")
@@ -167,7 +167,7 @@ action = "Right"
 visibility_mode = 1
 
 [node name="Jump" type="TouchScreenButton" parent="UserInterface/GameUI"]
-position = Vector2(1340, 427)
+position = Vector2(1024, 416)
 texture_normal = ExtResource("8_ombkc")
 action = "Jump"
 visibility_mode = 1
