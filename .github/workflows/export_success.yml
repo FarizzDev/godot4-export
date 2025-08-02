@@ -112,7 +112,7 @@ jobs:
           if [ $VERSION == "3.6.stable" ]; then
             godot --no-window --export "$PLATFORM" export/$FILENAME$EXT
           fi
-          godot --headless --export-release  "$PLATFORM" export/$FILENAME$EXT --xr_mode_regular --use_immersive
+          godot --headless --path ../ --export-release  "$PLATFORM" export/$FILENAME$EXT --xr_mode_regular --use_immersive
 
       - name: Upload result to artifact
         uses: actions/upload-artifact@v4
